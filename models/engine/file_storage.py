@@ -1,0 +1,30 @@
+#!/usr/bin/python3
+
+from os.path import exists
+import json
+
+
+class Filestorage:
+        __file_path = "file.json"
+        __objects = {}
+
+        def all(self):
+                return  self.__objects
+
+        def new(self, obj):
+                key = obj.__class__.__name__ + "." + obj.id
+                self.__objects[key] =  obj
+
+        def save(self):
+            dictionary = {}
+            for key, value in self.__object.items():
+                dictionary[key] = value.to_dict()
+            with open(self.__file_path, "w", encoding="utf-8") as f:
+                f.write(json.dumps(dictionary))
+
+        def reload(self):
+            if exists(self.__file_path):
+                with open(self.__file_path, "r", encoding="utf-8") as f:
+                    dictionary = json.loads(f.read())
+                    for key, value in dictionary.items():
+                        self.__objects[key] = eval(value['__class__'](**v)
