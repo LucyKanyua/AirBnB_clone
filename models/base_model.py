@@ -7,7 +7,6 @@ import uuid
 
 
 class BaseModel:
-    id(str)
 
     def __init__(self, *args, **kwargs):
         if kwargs:
@@ -15,7 +14,7 @@ class BaseModel:
                 if arg in ("created_at", "updated_at"):
                     value = datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f")
 
-                if arg != '__class__':
+                if arg != "__class__":
                     setattr(self, arg, value)
             else:
                 self.id = str(uuid.uuid4())
