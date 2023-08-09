@@ -4,7 +4,7 @@ from os.path import exists
 import json
 
 
-class Filestorage:
+class FileStorage:
         __file_path = "file.json"
         __objects = {}
 
@@ -17,7 +17,7 @@ class Filestorage:
 
         def save(self):
             dictionary = {}
-            for key, value in self.__object.items():
+            for key, value in self.__objects.items():
                 dictionary[key] = value.to_dict()
             with open(self.__file_path, "w", encoding="utf-8") as f:
                 f.write(json.dumps(dictionary))
@@ -27,4 +27,4 @@ class Filestorage:
                 with open(self.__file_path, "r", encoding="utf-8") as f:
                     dictionary = json.loads(f.read())
                     for key, value in dictionary.items():
-                        self.__objects[key] = eval(value['__class__'](**v)
+                        self.__objects[key] = eval(value['__class__'])(**v)
