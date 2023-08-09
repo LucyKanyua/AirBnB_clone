@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+# -*- coding: utf-8 -*-
 
 from datetime import datetime
 import models
@@ -6,26 +7,23 @@ import uuid
 
 
 class BaseModel:
-    id = str(uuid.uuid4())
-    created_at = datetime.now()
-    updated_at = datetime.now()
+	id (str)
+	def __init__(self, *args, **kwargs):
+		if kwargs:
+			for arg, value in kwargs.items():
+				if arg  in ("created_at", "updated_at"):
+					value = datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f")
 
-    def __init__(self, *args, **kwargs):
-        if kwargs:
-            for key, value in kwargs.items():
-                if key == "created_at" or key == "updated_at":
-                    value = datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f")
-
-                if key != "__class__":
-                    setattr(self, key, value)
-            else:
+			if arg != '__class__':
+				setattr(self, arg, value)
+		else:
                 self.id = str(uuid.uuid4())
                 self.created_at = datetime.now()
                 self.updated_at = datetime.now()
                 models.storage.new(self)
 
     def __str__(self):
-        return "[{0}] ({1}) {2}".format(self.__class__.__name__, self.id, self.__dict__)
+        return "[{}] ({}) {}".format(self.__class__.__name__, self.id, self.__dict__)
 
     def save(self):
         self.updated_at = datetime.now()
