@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 
+from models.base_model import BaseModel
 from os.path import exists
 import json
 
@@ -27,4 +28,4 @@ class FileStorage:
                 with open(self.__file_path, "r", encoding="utf-8") as f:
                     dictionary = json.loads(f.read())
                     for key, value in dictionary.items():
-                        self.__objects[key] = eval(value["__class__"])(**v)
+                        self.__objects[key] = eval(value["__class__"])(**value)
