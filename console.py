@@ -1,6 +1,9 @@
 #!/usr/bin/python3
 
+from datetime import datetime
 import cmd
+import models
+from models.base_model import BaseModel
 
 
 class HBNBCommand(cmd.Cmd):
@@ -20,9 +23,9 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
             return
         try:
-            new_instance = eval(arg)
+            new_instance = eval(arg)()
             new_instance.save()
-            print(new_instance.id)
+            print("{}".format(new_instance.id))
         except NameError:
             print("** class doesn't exist **")
 
