@@ -1,8 +1,13 @@
 #!/usr/bin/python3
+"""
+This module implements the HBNBCommand class,
+which provides a command-line interface
+for interacting with models
+in the HBNB application.
+"""
 
 import cmd
 import models
-from datetime import datetime
 from models.base_model import BaseModel
 from models.user import User
 from models.state import State
@@ -14,18 +19,58 @@ from models.engine.file_storage import FileStorage
 
 
 class HBNBCommand(cmd.Cmd):
+    """
+    This class provides a command-line interface for
+    managing the HBNB application's models.
+    """
     prompt = "(hbnb) "
 
     def do_quit(self, line):
+        """
+        Exit the command-line interface.
+
+        Args:
+            line (str): The command line input.
+
+        Returns:
+            bool: True to exit the program.
+        """
         return True
 
     def do_EOF(self, line):
+        """
+        Handle the end-of-file signal (Ctrl-D).
+
+        Args:
+            line (str): The command line input.
+
+        Returns:
+            bool: True to exit the program.
+        """
         return True
 
     def emptyline(self):
+        """
+        Do nothing when an empty line is entered.
+        """
         pass
 
     def do_create(self, arg):
+        """
+        Create a new instance of a specified model class
+        and save it to the storage.
+
+        Args:
+            arg (str): The name of the model class
+            to create an instance of.
+
+        Notes:
+            If the specified class does not exist,
+            an error message is displayed.
+
+        Example:
+            create User
+        """
         if not arg:
             print("** class name missing **")
             return
@@ -37,6 +82,22 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
 
     def do_show(self, arg):
+        """
+        Display the string representation of an instance
+        based on its class name and ID.
+
+        Args:
+            arg (str): The class name and instance ID
+            in the format "class_name instance_id".
+
+        Notes:
+            If the specified class does not exist or if
+            the instance ID is missing,
+            appropriate error messages are displayed.
+
+        Example:
+            show User 1234-5678-9012
+        """
         argument = arg.split()
         if not argument:
             print("** class name missing **")
@@ -53,6 +114,22 @@ class HBNBCommand(cmd.Cmd):
             print("** no instance found **")
 
     def do_destroy(self, arg):
+        """
+        Delete an instance based on its class name and ID.
+
+        Args:
+            arg (str): The class name and instance
+            ID in the format "class_name instance_id".
+
+        Notes:
+            If the specified class does not exist,
+            if the instance ID is missing,
+            or if the instance does not exist,
+            appropriate error messages are displayed.
+
+        Example:
+            destroy User 1234-5678-9012
+        """
         argument = arg.split()
         if not argument:
             print("** class name missing **")
@@ -70,6 +147,19 @@ class HBNBCommand(cmd.Cmd):
             print("** no instance found **")
 
     def do_all(self, arg):
+        """
+        Display a string representation of all instances of a
+        specified class or all instances if no class is specified.
+
+        Args:
+            arg (str): The class name.
+
+        Notes:
+            If the specified class does not exist, a message is displayed.
+
+        Example:
+            all User
+        """
         obj_list = []
         try:
             obj_dict = models.storage.all()
@@ -85,6 +175,22 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
 
     def do_update(self, arg):
+        """
+        Update attributes of an instance based
+        on its class name and ID.
+
+        Args:
+            arg (str): The class name, instance ID,
+            attribute name, and new attribute value.
+
+        Notes:
+            If the specified class does not exist,
+            if the instance ID is missing, or if the instance does not exist,
+            appropriate error messages are displayed.
+
+        Example:
+            update User 1234-5678-9012 first_name "John"
+        """
         args = arg.split()
         if not args:
             print("** class name missing **")
