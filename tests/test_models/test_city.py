@@ -4,7 +4,7 @@ This module contains unit tests for the City class.
 """
 from models.city import City
 from tests.test_models.test_base_model import TestBaseModel
-
+import models
 
 class TestCity(TestBaseModel):
     """
@@ -16,7 +16,7 @@ class TestCity(TestBaseModel):
         self.test_name = "City"
         self.test_class = City
 
-    def test_name(self):
+    def test_attr__name(self):
         """
         Test if 'name' attribute is a string.
         """
