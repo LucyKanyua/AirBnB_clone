@@ -4,6 +4,7 @@ This module contains unit tests for the FileStorage class.
 """
 import os
 import unittest
+import models
 from models.engine.file_storage import FileStorage
 from models.base_model import BaseModel
 

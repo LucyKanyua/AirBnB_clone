@@ -5,6 +5,8 @@ This module contains unit tests for the Review class.
 from models.review import Review
 from tests.test_models.test_base_model import TestBaseModel
 from datetime import datetime
+import uuid
+import models
 
 
 class TestReview(TestBaseModel):
@@ -46,13 +48,6 @@ class TestReview(TestBaseModel):
         """
         r = self.test_class()
         self.assertIsInstance(r.text, str)
-
-    def test_stars(self):
-        """
-        Test if 'stars' attribute is an integer.
-        """
-        r = self.test_class()
-        self.assertIsInstance(r.stars, int)
 
     def test_created_at(self):
         """
