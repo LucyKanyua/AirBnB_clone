@@ -85,3 +85,12 @@ class TestBaseModel(unittest.TestCase):
         b.save()
         key = "{}.{}".format(b.__class__.__name__, b.id)
         self.assertIn(key, models.storage.all())
+
+    def test_str_with_custom_id(self):
+        """
+        Test the __str__ method's output format when the 'id' attribute is
+        not the default value.
+        """
+        b = self.test_class(id="12345")
+        self.assertEqual(str(b), "[{}] (12345) {}".format(
+            b.__class__.__name__, b.__dict__))
