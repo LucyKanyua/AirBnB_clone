@@ -23,7 +23,7 @@ Available_Classes_Dict = {"BaseModel": BaseModel,
                           "City": City,
                           "Amenity": Amenity,
                           "Place": Place,
-                          "Review": Review} 
+                          "Review": Review}
 
 
 class HBNBCommand(cmd.Cmd):
@@ -223,6 +223,7 @@ class HBNBCommand(cmd.Cmd):
             print("** no instance found **")
         except NameError:
             print("** class doesn't exist **")
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
