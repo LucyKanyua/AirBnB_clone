@@ -8,6 +8,8 @@ in the HBNB application.
 
 import cmd
 import models
+import json
+from json import JSONDecodeError
 from models.base_model import BaseModel
 from models.user import User
 from models.state import State
@@ -211,11 +213,14 @@ class HBNBCommand(cmd.Cmd):
             if key in obj_dict:
                 if len(args) > 2:
                     if len(args) > 3:
-                        setattr(obj_dict[key], args[2], args[3].strip('"'))
+                        update_dict = json.loads('{{"{}": "{}"}}'.format(
+                            args[2], args[3].strip('"')))
                     else:
                         print("** value missing **")
                 else:
                     print("** attribute name missing **")
+                for k, v in update_dict.items():
+                    setattr(obj_dict[key], k, v)
                 models.storage.save()
             else:
                 print("** no instance found **")
@@ -230,7 +235,7 @@ class HBNBCommand(cmd.Cmd):
         """
         Override default method to handle <class name>.all(),
         <class name>.count(), <class name>.show(<id>),
-        <class name>.update(<id>, <attr name>, <attr value>),
+        <class name>.update(<id>, <dictionary representation>),
         and <class name>.destroy(<id>) commands.
         """
         p = line.split('.')
@@ -266,19 +271,6 @@ class HBNBCommand(cmd.Cmd):
             elif method_name.startswith("update("):
                 if method_name.endswith(")"):
                     if class_name in self.classes:
-                        args = method_name[7:-1].split(', ')
-                        if len(args) == 3:
-                            instance_id = args[0]
-                            attr_name = args[1]
-                            attr_value = args[2]
-                            self.do_update("{} {} {} {}".format(
-                                class_name, instance_id, attr_name, attr_value
-                                ))
-                        else:
-                            print("** Invalid number of arguments **")
-            elif method_name.startswith("update("):
-                if method_name.endswith(")"):
-                    if class_name in self.classes:
                         args = method_name[7:-1].split(', ', 1)
                         if len(args) == 2:
                             instance_id = args[0]
@@ -286,15 +278,16 @@ class HBNBCommand(cmd.Cmd):
                             try:
                                 update_dict = json.loads(update_dict)
                             except JSONDecodeError:
-                                print("** Invalid dictionary format **")
+                                 print("** Invalid dictionary format **")
                             else:
                                 self.do_update("{} {} {}".format(
-                                    class_name, instance_id, update_dict
-                                    ))
+                                    class_name, instance_id, update_dict))
                         else:
                             print("** Invalid arguments **")
                     else:
                         print("** class doesn't exist **")
+                else:
+                    print("*** Unknown syntax: {}".format(line))
             else:
                 print("*** Unknown syntax: {}".format(line))
         else:
