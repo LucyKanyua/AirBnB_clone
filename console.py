@@ -226,17 +226,50 @@ class HBNBCommand(cmd.Cmd):
 
     def default(self, line):
         """
-        Override default method to handle <class name>.all() command.
+        Override default method to handle <class name>.all()
+        and <class name>.count() commands.
         """
         parts = line.split('.')
-        if len(parts) == 2 and parts[1] == "all()":
+        if len(parts) == 2:
             class_name = parts[0]
-            if class_name in self.classes:
-                self.do_all(class_name)
+            method_name = parts[1]
+            if method_name == "all()":
+                if class_name in self.classes:
+                    self.do_all(class_name)
+                else:
+                    print("** class doesn't exist **")
+            elif method_name == "count()":
+                if class_name in self.classes:
+                    self.do_count(class_name)
+                else:
+                    print("** class doesn't exist **")
             else:
-                print("** class doesn't exist **")
+                print("*** Unknown syntax: {}".format(line))
         else:
             print("*** Unknown syntax: {}".format(line))
+
+    def do_count(self, arg):
+        """
+        Display the number of instances of a specified class.
+
+        Args:
+            arg (str): The class name.
+
+        Notes:
+            If the specified class does not exist, a message is displayed.
+
+        Example:
+            User.count()
+        """
+        if arg not in self.classes:
+            print("** class doesn't exist **")
+            return
+
+        count = 0
+        for key in models.storage.all():
+            if key.split(".")[0] == arg:
+                count += 1
+        print(count)
 
 
 if __name__ == '__main__':
