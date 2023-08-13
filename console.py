@@ -229,7 +229,9 @@ class HBNBCommand(cmd.Cmd):
     def default(self, line):
         """
         Override default method to handle <class name>.all(),
-        <class name>.count(), and <class name>.show(<id>) commands.
+        <class name>.count(), <class name>.show(<id>),
+        <class name>.update(<id>, <attr name>, <attr value>),
+        and <class name>.destroy(<id>) commands.
         """
         p = line.split('.')
         if len(p) == 2:
@@ -245,18 +247,37 @@ class HBNBCommand(cmd.Cmd):
                     self.do_count(class_name)
                 else:
                     print("** class doesn't exist **")
-            elif method_name.startswith("show(") and method_name.endswith(")"):
-                if class_name in self.classes:
-                    instance_id = method_name[5:-1]
-                    self.do_show("{} {}".format(class_name, instance_id))
-                else:
-                    print("** class doesn't exist **")
+            elif method_name.startswith("show("):
+                if method_name.endswith(")"):
+                    if class_name in self.classes:
+                        instance_id = method_name[5:-1]
+                        self.do_show("{} {}".format(
+                            class_name, instance_id))
+                    else:
+                        print("** class doesn't exist **")
             elif method_name.startswith("destroy("):
                 if method_name.endswith(")"):
                     if class_name in self.classes:
                         instance_id = method_name[8:-1]
                         self.do_destroy("{} {}".format(
                             class_name, instance_id))
+                    else:
+                        print("** class doesn't exist **")
+            elif method_name.startswith("update("):
+                if method_name.endswith(")"):
+                    if class_name in self.classes:
+                        args = method_name[7:-1].split(', ')
+                        if len(args) < 3:
+                            print("** too few arguments **")
+                        elif len(args) > 3:
+                            instance_id = args[0]
+                            attr_name = args[1]
+                            attr_value = args[2]
+                            self.do_update("{} {} {} {}".format(
+                                class_name, instance_id, attr_name, attr_value
+                                ))
+                        else:
+                            print("** value missing **")
                     else:
                         print("** class doesn't exist **")
             else:
