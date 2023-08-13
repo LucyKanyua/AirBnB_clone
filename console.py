@@ -235,7 +235,7 @@ class HBNBCommand(cmd.Cmd):
         """
         Override default method to handle <class name>.all(),
         <class name>.count(), <class name>.show(<id>),
-        <class name>.update(<id>, <dictionary representation>),
+        <class name>.update(<id>, <attr name>, <attr value>),
         and <class name>.destroy(<id>) commands.
         """
         p = line.split('.')
@@ -283,8 +283,6 @@ class HBNBCommand(cmd.Cmd):
                             print("** Invalid number of arguments **")
                     else:
                         print("** class doesn't exist **")
-                else:
-                    print("*** Unknown syntax: {}".format(line))
             else:
                 print("*** Unknown syntax: {}".format(line))
         else:
