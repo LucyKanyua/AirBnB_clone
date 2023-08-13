@@ -276,6 +276,23 @@ class HBNBCommand(cmd.Cmd):
                                 ))
                         else:
                             print("** Invalid number of arguments **")
+            elif method_name.startswith("update("):
+                if method_name.endswith(")"):
+                    if class_name in self.classes:
+                        args = method_name[7:-1].split(', ', 1)
+                        if len(args) == 2:
+                            instance_id = args[0]
+                            update_dict = args[1]
+                            try:
+                                update_dict = json.loads(update_dict)
+                            except JSONDecodeError:
+                                print("** Invalid dictionary format **")
+                            else:
+                                self.do_update("{} {} {}".format(
+                                    class_name, instance_id, update_dict
+                                    ))
+                        else:
+                            print("** Invalid arguments **")
                     else:
                         print("** class doesn't exist **")
             else:
