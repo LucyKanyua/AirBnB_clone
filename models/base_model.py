@@ -7,7 +7,6 @@ Classes:
     BaseModel: The base model for all other models.
 """
 
-import models
 import uuid
 from datetime import datetime
 
@@ -43,6 +42,8 @@ class BaseModel:
                 and the instance is registered with
                 the storage system.
         """
+        import models
+
         if kwargs:
             for key, value in kwargs.items():
                 if key == "created_at" or key == "updated_at":
@@ -72,6 +73,8 @@ class BaseModel:
         Update the 'updated_at' attribute with the current datetime
         and trigger the saving of the instance to the storage system.
         """
+        import models
+
         self.updated_at = datetime.now()
         models.storage.save()
 
