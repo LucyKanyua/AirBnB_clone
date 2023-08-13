@@ -1,10 +1,19 @@
 #!/usr/bin/python3
+
+"""BaseModel class module. This module defines the BaseModel class,
+which serves as the foundation for all models in the application.
+"""
+
 import models
 import uuid
 from datetime import datetime
 
 
 class BaseModel:
+    """BaseModel class represents the base model for all other models
+    in the application. It provides common attributes
+    and methods that are inherited by specific model classes.
+    """
 
     def __init__(self, *args, **kwargs):
         """
