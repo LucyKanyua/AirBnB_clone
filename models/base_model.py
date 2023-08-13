@@ -1,9 +1,10 @@
 #!/usr/bin/python3
+"""
+This module defines the BaseModel class, which serves as
+the foundation for all models in the application.
 
-"""Base Model module
-
-This module defines the BaseModel class,
-which serves as the foundation for all models in the application.
+Classes:
+    BaseModel: The base model for all other models.
 """
 
 import models
@@ -12,25 +13,35 @@ from datetime import datetime
 
 
 class BaseModel:
-    """Base Model Class 
-
-    it represents the base model for all other models
+    """
+    This class represents the base model for all other models
     in the application. It provides common attributes
     and methods that are inherited by specific model classes.
+
+    Attributes:
+        id (str): The unique identifier for the instance.
+        created_at (datetime): The creation timestamp.
+        updated_at (datetime): The last update timestamp.
+
+    Methods:
+        __init__(self, *args, **kwargs): Initialize a new instance.
+        __str__(self): Return a human-readable string representation.
+        save(self): Update timestamps and save to storage.
+        to_dict(self): Convert instance to a dictionary.
     """
 
     def __init__(self, *args, **kwargs):
-        """Base Model __init__
+        """
         Initialize a new instance of the BaseModel class.
 
         Args:
             *args: Variable length argument list.
             **kwargs: Arbitrary keyword arguments.
-            If provided, the instance attributes are set based
-            on these arguments.
-                      If not provided, default values are set,
-                      and the instance is registered with
-                      the storage system.
+                If provided, the instance attributes are set based
+                on these arguments.
+                If not provided, default values are set,
+                and the instance is registered with
+                the storage system.
         """
         if kwargs:
             for key, value in kwargs.items():
