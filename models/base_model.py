@@ -1,6 +1,8 @@
 #!/usr/bin/python3
 
-"""BaseModel class module. This module defines the BaseModel class,
+"""Base Model module
+
+This module defines the BaseModel class,
 which serves as the foundation for all models in the application.
 """
 
@@ -10,13 +12,15 @@ from datetime import datetime
 
 
 class BaseModel:
-    """BaseModel class represents the base model for all other models
+    """Base Model Class 
+
+    it represents the base model for all other models
     in the application. It provides common attributes
     and methods that are inherited by specific model classes.
     """
 
     def __init__(self, *args, **kwargs):
-        """
+        """Base Model __init__
         Initialize a new instance of the BaseModel class.
 
         Args:
