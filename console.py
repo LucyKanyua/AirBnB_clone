@@ -251,6 +251,14 @@ class HBNBCommand(cmd.Cmd):
                     self.do_show("{} {}".format(class_name, instance_id))
                 else:
                     print("** class doesn't exist **")
+            elif method_name.startswith("destroy("):
+                if method_name.endswith(")"):
+                    if class_name in self.classes:
+                        instance_id = method_name[8:-1]
+                        self.do_destroy("{} {}".format(
+                            class_name, instance_id))
+                    else:
+                        print("** class doesn't exist **")
             else:
                 print("*** Unknown syntax: {}".format(line))
         else:
