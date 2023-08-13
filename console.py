@@ -17,6 +17,14 @@ from models.place import Place
 from models.review import Review
 from models.engine.file_storage import FileStorage
 
+Available_Classes_Dict = {"BaseModel": BaseModel,
+                          "User": User,
+                          "State": State,
+                          "City": City,
+                          "Amenity": Amenity,
+                          "Place": Place,
+                          "Review": Review} 
+
 
 class HBNBCommand(cmd.Cmd):
     """
@@ -24,6 +32,7 @@ class HBNBCommand(cmd.Cmd):
     managing the HBNB application's models.
     """
     prompt = "(hbnb) "
+    classes = Available_Classes_Dict
 
     def do_quit(self, line):
         """
@@ -161,18 +170,17 @@ class HBNBCommand(cmd.Cmd):
             all User
         """
         obj_list = []
-        try:
-            obj_dict = models.storage.all()
-            if arg:
-                for key, value in obj_dict.items():
-                    if value.__class__.__name__ == arg:
-                        obj_list.append(str(value))
-            else:
-                for value in obj_dict.values():
+        if arg:
+            if arg not in Available_Classes_Dict:
+                print("** class doesn't exist **")
+                return
+            for key, value in models.storage.all().items():
+                if key.split(".")[0] == arg:
                     obj_list.append(str(value))
-            print(obj_list)
-        except NameError:
-            print("** class doesn't exist **")
+        else:
+            for key, value in models.storage.all().items():
+                obj_list.append(str(value))
+        print(obj_list)
 
     def do_update(self, arg):
         """
@@ -215,7 +223,6 @@ class HBNBCommand(cmd.Cmd):
             print("** no instance found **")
         except NameError:
             print("** class doesn't exist **")
-
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
