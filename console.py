@@ -278,7 +278,7 @@ class HBNBCommand(cmd.Cmd):
                             try:
                                 update_dict = json.loads(update_dict)
                             except JSONDecodeError:
-                                 print("** Invalid dictionary format **")
+                                print("** Invalid dictionary format **")
                             else:
                                 self.do_update("{} {} {}".format(
                                     class_name, instance_id, update_dict))
