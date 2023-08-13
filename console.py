@@ -224,6 +224,20 @@ class HBNBCommand(cmd.Cmd):
         except NameError:
             print("** class doesn't exist **")
 
+    def default(self, line):
+        """
+        Override default method to handle <class name>.all() command.
+        """
+        parts = line.split('.')
+        if len(parts) == 2 and parts[1] == "all()":
+            class_name = parts[0]
+            if class_name in self.classes:
+                self.do_all(class_name)
+            else:
+                print("** class doesn't exist **")
+        else:
+            print("*** Unknown syntax: {}".format(line))
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
