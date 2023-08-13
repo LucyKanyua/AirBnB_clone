@@ -112,11 +112,13 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
             return
         try:
-            obj_dict = models.storage.all()
-            key = "{}.{}".format(argument[0], argument[1])
-            print(obj_dict[key])
-        except NameError:
-            print("** class doesn't exist **")
+            class_name = argument[0]
+            if class_name in self.classes:
+                obj_dict = models.storage.all()
+                key = "{}.{}".format(argument[0], argument[1])
+                print(obj_dict[key])
+            else:
+                print("** class doesn't exist **")
         except IndexError:
             print("** instance id missing **")
         except KeyError:
@@ -226,13 +228,13 @@ class HBNBCommand(cmd.Cmd):
 
     def default(self, line):
         """
-        Override default method to handle <class name>.all()
-        and <class name>.count() commands.
+        Override default method to handle <class name>.all(),
+        <class name>.count(), and <class name>.show(<id>) commands.
         """
-        parts = line.split('.')
-        if len(parts) == 2:
-            class_name = parts[0]
-            method_name = parts[1]
+        p = line.split('.')
+        if len(p) == 2:
+            class_name = p[0]
+            method_name = p[1]
             if method_name == "all()":
                 if class_name in self.classes:
                     self.do_all(class_name)
@@ -241,6 +243,12 @@ class HBNBCommand(cmd.Cmd):
             elif method_name == "count()":
                 if class_name in self.classes:
                     self.do_count(class_name)
+                else:
+                    print("** class doesn't exist **")
+            elif method_name.startswith("show(") and method_name.endswith(")"):
+                if class_name in self.classes:
+                    instance_id = method_name[5:-1]
+                    self.do_show("{} {}".format(class_name, instance_id))
                 else:
                     print("** class doesn't exist **")
             else:
