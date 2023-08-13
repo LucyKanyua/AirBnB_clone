@@ -213,14 +213,11 @@ class HBNBCommand(cmd.Cmd):
             if key in obj_dict:
                 if len(args) > 2:
                     if len(args) > 3:
-                        update_dict = json.loads('{{"{}": "{}"}}'.format(
-                            args[2], args[3].strip('"')))
+                        setattr(obj_dict[key], args[2], args[3].strip('"'))
                     else:
                         print("** value missing **")
                 else:
                     print("** attribute name missing **")
-                for k, v in update_dict.items():
-                    setattr(obj_dict[key], k, v)
                 models.storage.save()
             else:
                 print("** no instance found **")
