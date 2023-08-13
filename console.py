@@ -267,9 +267,7 @@ class HBNBCommand(cmd.Cmd):
                 if method_name.endswith(")"):
                     if class_name in self.classes:
                         args = method_name[7:-1].split(', ')
-                        if len(args) < 3:
-                            print("** too few arguments **")
-                        elif len(args) > 3:
+                        if len(args) == 3:
                             instance_id = args[0]
                             attr_name = args[1]
                             attr_value = args[2]
@@ -277,7 +275,7 @@ class HBNBCommand(cmd.Cmd):
                                 class_name, instance_id, attr_name, attr_value
                                 ))
                         else:
-                            print("** value missing **")
+                            print("** Invalid number of arguments **")
                     else:
                         print("** class doesn't exist **")
             else:
