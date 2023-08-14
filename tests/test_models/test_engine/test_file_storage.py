@@ -63,6 +63,12 @@ class TestFileStorage(unittest.TestCase):
         obj = self.test_class()
         objects = obj.all()
         self.assertEqual(objects, obj._FileStorage__objects)
+        mod_key = "ExtraObject"
+        obj._FileStorage__objects[mod_key] = BaseModel()
+        obj._FileStorage__objects[mod_key].save()
+        mod_objs = obj.all()
+        del obj._FileStorage__objects[mod_key]
+        self.assertEqual(mod_objs, obj._FileStorage__objects)
 
     def test_new(self):
         """Test if the 'new' method adds an object to __objects"""
