@@ -57,3 +57,25 @@ class TestFileStorage(unittest.TestCase):
         b.save()
         b2 = BaseModel(**new_dict)
         self.assertFalse(os.stat("file.json").st_size == 0)
+
+    def test_all(self):
+        """Test if the 'all' method returns the __objects attribute"""
+        obj = self.test_class()
+        objects = obj.all()
+        self.assertEqual(objects, obj._FileStorage__objects)
+
+    def test_new(self):
+        """Test if the 'new' method adds an object to __objects"""
+        obj = self.test_class()
+        new_obj = BaseModel()
+        obj.new(new_obj)
+        self.assertIn("BaseModel." + new_obj.id, obj._FileStorage__objects)
+
+    def test_reload(self):
+        """Test if the 'reload' method reloads __objects from file"""
+        obj = self.test_class()
+        new_obj = BaseModel()
+        obj.new(new_obj)
+        obj.save()
+        obj.reload()
+        self.assertIn("BaseModel." + new_obj.id, obj._FileStorage__objects)
