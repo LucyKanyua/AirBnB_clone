@@ -85,10 +85,14 @@ class TestBaseModel(unittest.TestCase):
         adds the instance to storage.
         """
         b = self.test_class()
+        created_at_before = b.created_at
+        created_at_before = b.updated_at
         b.save()
         key = "{}.{}".format(b.__class__.__name__, b.id)
         self.assertIn(key, models.storage.all())
         self.assertIn(key, models.storage._FileStorage__objects)
+        self.assertNotEqual(b.updated_at, updated_at_before)
+        self.assertNotEqual(created_at_before, b.updated_at)
 
     def test_str_with_custom_id(self):
         """
