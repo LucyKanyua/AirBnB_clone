@@ -22,3 +22,10 @@ class TestState(TestBaseModel):
         """
         s = self.test_class()
         self.assertIsInstance(s.id, str)
+
+    def test_state_name(self):
+        """
+        Test if 'name' attribute is a string.
+        """
+        s = self.test_class()
+        self.assertIsInstance(s.name, str)

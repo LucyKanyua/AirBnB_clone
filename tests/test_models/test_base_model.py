@@ -86,7 +86,7 @@ class TestBaseModel(unittest.TestCase):
         """
         b = self.test_class()
         created_at_before = b.created_at
-        created_at_before = b.updated_at
+        updated_at_before = b.updated_at
         b.save()
         key = "{}.{}".format(b.__class__.__name__, b.id)
         self.assertIn(key, models.storage.all())
