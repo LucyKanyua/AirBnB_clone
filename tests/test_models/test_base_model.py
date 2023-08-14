@@ -75,6 +75,9 @@ class TestBaseModel(unittest.TestCase):
         b = self.test_class()
         b_dict = b.to_dict()
         self.assertEqual(b.to_dict(), b_dict)
+        self.assertIsInstance(b_dict["created_at"], str)
+        self.assertIsInstance(b_dict["updated_at"], str)
+        self.assertEqual(b_dict["__class__"], self.test_name)
 
     def test_save(self):
         """
@@ -85,6 +88,7 @@ class TestBaseModel(unittest.TestCase):
         b.save()
         key = "{}.{}".format(b.__class__.__name__, b.id)
         self.assertIn(key, models.storage.all())
+        self.assertIn(key, models.storage._FileStorage__objects)
 
     def test_str_with_custom_id(self):
         """
