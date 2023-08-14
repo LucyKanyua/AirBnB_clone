@@ -85,9 +85,8 @@ class TestFileStorage(unittest.TestCase):
         obj.save()
         obj.reload()
         self.assertIn("BaseModel." + new_obj.id, obj._FileStorage__objects)
+        obj._FileStorage__objects.clear()
         empty_obj = self.test_class()
         empty_obj.save()
-        new_empty = self.test_class()
-        new_empty._FileStorage__file_path = "empty.json"
-        new_empty.reload()
-        self.assertNotEqual(len(new_empty._FileStorage__objects), 1)
+        empty_obj.reload()
+        self.assertEqual(len(empty_obj._FileStorage__objects), 0)
