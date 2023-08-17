@@ -8,7 +8,6 @@ in the HBNB application.
 
 import cmd
 import models
-import json
 from json import JSONDecodeError
 from models.base_model import BaseModel
 from models.user import User
@@ -152,12 +151,12 @@ class HBNBCommand(cmd.Cmd):
             key = "{}.{}".format(argument[0], argument[1])
             del obj_dict[key]
             models.storage.save()
-        except NameError:
-            print("** class doesn't exist **")
-        except IndexError:
-            print("** instance id missing **")
         except KeyError:
             print("** no instance found **")
+        except IndexError:
+            print("** instance id missing **")
+        except NameError:
+            print("** class doesn't exist **")
 
     def do_all(self, arg):
         """
