@@ -1,11 +1,13 @@
 section.places {
-	text-align: center;
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
 }
 
 section.places h1 {
-	font-size: 30px;
-	text-align: left;
+	margin-left: 20px;
 	width: 100%;
+	font-size: 30px;
 }
 
 article {
@@ -15,10 +17,10 @@ article {
 	margin: 20px;
 	padding: 20px;
 	width: 390px;
-	text-align: center;
+	justify-content: center;
 }
 
 article h2 {
 	font-size: 30px;
-	text-align: center;
+	justify-content: center;
 }
